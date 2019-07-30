@@ -97,5 +97,7 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias dual="autorandr -l dual"
-alias i3c="gedit ~/.i3/config"
+# alias dual="autorandr -l dual"
+alias i3c="nano ~/.i3/config"
+alias bk="xbacklight -set"
+

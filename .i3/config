@@ -6,10 +6,10 @@ set $mod Mod4
 
 exec --no-startup-id sh ~/.scripts/auto_randr.sh
 
-# exec_always --no-startup-id /home/cong/.config/polybar/launch.sh
+# exec_always --no-startup-id ~/.config/polybar/launch.sh
 exec --no-startup-id fcitx5
 exec --no-startup-id ss-qt5
-exec --no-startup-id srandrd ~/.config/srandrd/display_handler.sh 
+exec --no-startup-id srandrd ~/.scripts/display_handler.sh 
 
 bindsym $mod+Ctrl+d exec autorandr -l dual
 
