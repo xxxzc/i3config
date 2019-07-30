@@ -1,0 +1,18 @@
+# File created by KDE Gtk Config
+# Configs for GTK2 programs 
+
+include "/usr/share/themes/Materia-dark-compact/gtk-2.0/gtkrc"
+style "user-font" 
+{
+	font_name="Noto Sans CJK SC Regular"
+}
+widget_class "*" style "user-font"
+gtk-font-name="Noto Sans CJK SC Regular 10"
+gtk-theme-name="Materia-dark-compact"
+gtk-icon-theme-name="Papirus"
+gtk-fallback-icon-theme="Adwaita"
+gtk-cursor-theme-name="Adwaita"
+gtk-toolbar-style=GTK_TOOLBAR_ICONS
+gtk-menu-images=0
+gtk-button-images=0
+gtk-primary-button-warps-slider=0
