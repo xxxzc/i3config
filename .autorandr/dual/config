@@ -9,7 +9,7 @@ off
 output DP1
 mode 1920x1080
 pos 0x0
-rate 60.00
+rate 144.00
 output eDP1
 mode 1920x1080
 pos 0x1080

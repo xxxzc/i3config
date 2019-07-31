@@ -1,8 +1,0 @@
-#
-# This file is parsed by pam_env module
-#
-# Syntax: simple "KEY=VAL" pairs on separate lines
-#
-
-auto_proxy="file:///home/cong/.scripts/genpac/my.pac"
-SOCKS_VERSION=5

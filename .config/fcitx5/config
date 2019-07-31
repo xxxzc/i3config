@@ -32,7 +32,7 @@
 
 [Behavior]
 # Active By Default
-ActiveByDefault=True
+ActiveByDefault=False
 # Show Input Method Information when switch input method
 ShowInputMethodInformation=True
 # Default page size
