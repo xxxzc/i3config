@@ -1,63 +1,89 @@
-# mirror and archlinuxcn
-sudo pacman-mirrors -i -c China -m rank
 
-# echo -e "[archlinuxcn]\nserver = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch" | sudo tee -a /etc/pacman.conf
-sudo sed -i '$a\[archlinuxcn]\nserver = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch' /etc/pacman.conf
 
-sudo pacman -Syu
-sudo pacman -S archlinuxcn-keyring
+mirror() {
+    # mirror and archlinuxcn
+    sudo pacman-mirrors -i -c China -m rank
+    sudo pacman -Syu
 
-# common
-sudo pacman -S yay
-sudo pacman -S ttf-hack noto-fonts-cjk noto-fonts-emoji noto-fonts-extra  
-sudo pacman -S fcitx5-git fcitx5-gtk-git fcitx5-qt4-git fcitx5-qt5-git kcm-fcitx5-git fcitx5-chinese-addons-git
+    sudo pacman -S python-pip
+    pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+}
 
-# i3 display
-sudo pacman -S autorandr srandrd xbacklight
+archcn() {
+    # echo -e "[archlinuxcn]\nServer = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch" | sudo tee -a /etc/pacman.conf
+    sudo sed -i '$a\[archlinuxcn]\nServer = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch' /etc/pacman.conf
+    sudo pacman -Syu
+    sudo pacman -S archlinuxcn-keyring
+}
 
-# terminal
-sudo pacman -S sakura
+common() {
+    # common
+    sudo pacman -S yay
+    sudo pacman -S ttf-hack noto-fonts-cjk noto-fonts-emoji noto-fonts-extra  
+    sudo pacman -S fcitx5-git fcitx5-gtk-git fcitx5-qt4-git fcitx5-qt5-git kcm-fcitx5-git fcitx5-chinese-addons-git
+}
 
-# theme and icon
-sudo pacman -S materia-gtk-theme papirus-icon-theme
+i3() {
+    # i3 display
+    sudo pacman -S autorandr srandrd xorg-xbacklight
+    yay -S sakura polybar rofi
+}
 
-# gnome applications
-sudo pacman -S donf-editor evince nautilus sushi nautilus-admin
+app() {
+    # theme and icon
+    sudo pacman -S materia-gtk-theme papirus-icon-theme
 
-# kde applications
-sudo pacman -S filelight gwenview spectacle
+    # gnome applications
+    sudo pacman -S donf-editor evince nautilus sushi nautilus-admin
 
-# applications
-sudo pacman -S shadowsocks-qt5 chromium visual-studio-code-bin desktop-naotu netease-cloud-music \
+    # kde applications
+    sudo pacman -S filelight gwenview spectacle
+
+    # applications
+    sudo pacman -S shadowsocks-qt5 chromium visual-studio-code-bin desktop-naotu netease-cloud-music \
 	typora microsoft-office-online-jak 
 
-# oh-my-zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+    sudo pip install genpac
+}
 
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+omz() {
+    # oh-my-zsh
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
-sed -i 's/^plugins=.*/plugins=(git zsh-syntax-highlighting zsh-autosuggestions)/' ~/.zshrc
-source ~/.zshrc
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+    git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
+    sed -i 's/^plugins=.*/plugins=(git zsh-syntax-highlighting zsh-autosuggestions)/' ~/.zshrc
+    source ~/.zshrc
+}
 
-# pip mirror
-pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
-
-# pac file
-sudo pip install genpac
-# sh ~/.scripts/genpac/gen.sh
 
 tf() {
     # tensorflow and keras
-    gpasswd -a $USER bumblebee
+    sudo gpasswd -a $USER bumblebee
 
     sudo pacman -S python-tensorflow-opt-cuda
-
-    pip install -U keras pandas scikit-learn matplotlib blingfire 
+    
+    if ! pip list | grep Keras; then
+        pip install keras pandas scikit-learn matplotlib blingfire --user 
+    fi
 }
-tf
 
+if ! grep -q "tsinghua" /etc/pacman.d/mirrorlist; then
+    mirror
+fi
 
+if ! grep -q "archlinuxcn" /etc/pacman.conf; then
+    archcn
+fi
 
+common
+i3
+app
 
+if [[ ! -d ~/.oh-my-zsh ]]; then
+    omz
+fi
+
+#before tf, need reboot and -Syu
+#tf
