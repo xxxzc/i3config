@@ -27,6 +27,9 @@ i3() {
     # i3 display
     sudo pacman -S autorandr srandrd xorg-xbacklight
     yay -S sakura polybar rofi
+
+    # pulseaudio
+    install_pulse
 }
 
 app() {
