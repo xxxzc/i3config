@@ -19,7 +19,7 @@ archcn() {
 common() {
     # common
     sudo pacman -S yay
-    sudo pacman -S ttf-hack noto-fonts-cjk noto-fonts-emoji noto-fonts-extra  
+    sudo pacman -S ttf-hack noto-fonts-cjk noto-fonts-emoji noto-fonts-extra awesome-terminal-fonts otf-font-awesome  
     sudo pacman -S fcitx5-git fcitx5-gtk-git fcitx5-qt4-git fcitx5-qt5-git kcm-fcitx5-git fcitx5-chinese-addons-git
 }
 
